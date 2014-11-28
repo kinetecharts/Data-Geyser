@@ -24,3 +24,7 @@ var TweetSchema = new Schema({
 });
 
 module.exports = mongoose.model('Tweet', TweetSchema);
+
+// var Tweet = mongoose.model('Tweet', TweetSchema);
+// Tweet.count({}, function(err, cnt){console.log(cnt)})
+// Tweet.find({}).limit(10).exec(function(err,tw){console.log(tw);})

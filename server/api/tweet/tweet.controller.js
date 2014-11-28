@@ -16,9 +16,17 @@ var $ = require('jquery');
 
 // gets list of tweets matching topic
 exports.getTweets = function(req, res){
-  Tweet.find({keyword: req.params.topic}, function(err, tweets) {
-    return res.json(200, tweets);
-  });
+  console.log(req.params.topic);
+  Tweet.find({keyword: req.params.topic})
+    .limit(5000)
+    .exec(function(err, tweets) {
+      console.log('num tweets found '+tweets.length);
+      return res.json(200, tweets);
+    });
+  // Tweet.find({keyword: req.params.topic}, function(err, tweets) {
+  //   console.log('num tweets found '+tweets.length);
+  //   return res.json(200, tweets);
+  // });
 }
 
 // stops twitter stream
@@ -47,12 +55,25 @@ exports.destroyTweets = function(req, res){
 
 // Get list of all tweets
 exports.index = function(req, res) {
-  Tweet.find(function (err, tweets) {
-    if(err) { return handleError(res, err); }
+  Tweet.find()
+  .limit(5000)
+  .exec(function(err, tweets) {
+    console.log('num tweets found '+tweets.length);
     return res.json(200, tweets);
   });
+
+  // Tweet.count({}, function (err, cnts) {
+  //   if(err) { return handleError(res, err); }
+  //   console.log(cnts);
+  //   return res.json(200, cnts);
+  // });
+  // Tweet.find(function (err, tweets) {
+  //   if(err) { return handleError(res, err); }
+  //   return res.json(200, tweets);
+  // });
 };
 
 function handleError(res, err) {
+  console.log(err);
   return res.send(500, err);
 }

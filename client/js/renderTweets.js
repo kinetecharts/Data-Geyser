@@ -18,7 +18,8 @@ var renderTweets = function(tweets){
     var nodeSource = globe.getEcef(tweets[i].latitude, -tweets[i].longitude, 0);
 
     if (i % wordThreshold === 0) {
-      postText(tweets[i].text_keywords, tweets[i].isBlacklisted, nodeSource);
+      // postText(tweets[i].text_keywords, tweets[i].isBlacklisted, nodeSource);
+      postText(tweets[i].description, tweets[i].isBlacklisted, nodeSource);
     }
 
     // fires fountains if tweet has more than n followers
@@ -65,6 +66,8 @@ var renderTweets = function(tweets){
 var postText = function(text, blacklist, node){
 
   var canvas = document.createElement("canvas");
+  canvas.height = 200;
+  canvas.width = 500;
   var context = canvas.getContext('2d');
 
   context.font = '10pt Calibri';
@@ -76,7 +79,7 @@ var postText = function(text, blacklist, node){
     context.fillStyle = 'white';
   }
   
-  context.fillText(text, 150, 100);
+  context.fillText(text, 10, 100);
 
 
   var texture = new THREE.Texture(canvas);
