@@ -36,11 +36,15 @@ function streamTweets(topic, callback) {
   
   var globe = ['-180', '-90', '180', '90'];
 
-  stream = T.stream('statuses/filter', { track: ['black friday', 'blackfriday']}); // filter tweets with geo data only
+  stream = T.stream('statuses/filter', { track: ['@airbrake', '@mail_gun', 
+    '@objectrocket', '@rackspace', '@GeekdomSF', '@redistogo', 
+    'mongodb', 'redis', 'elasticsearch', '#spark' ]}); // filter tweets with geo data only
+  // stream = T.stream('statuses/filter', { track: ['black friday', 'blackfriday']}); // filter tweets with geo data only
   // stream = T.stream('statuses/filter', { locations: globe, track: ['black friday', 'blackfriday'], language: 'en'}); // filter tweets with geo data only
   // var stream = T.stream('statuses/filter', { track: topic }); // filter tweets with keyword
   stream.on('tweet', function (tweet) {
     // Create tweet object with geo data
+    console.log(tweet.text);
     if (tweet.coordinates || tweet.geo) {
 
       // keyword filter to extract and join keywords
@@ -72,7 +76,7 @@ function streamTweets(topic, callback) {
       };
 
       // Save to database
-      console.log(newTweet.description);
+      console.log("valid tweet: " + newTweet.description);
       Tweet.create(newTweet);
     }
   });
